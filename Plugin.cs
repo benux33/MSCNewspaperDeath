@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace DeathNewspaper
 {
-    [BepInPlugin("local.deathnewspaper", "Death Newspaper", "1.0.18")]
+    [BepInPlugin("local.deathnewspaper", "Death Newspaper", "1.0.19")]
     public sealed class Plugin : BaseUnityPlugin
     {
         static Plugin instance;
@@ -87,7 +87,7 @@ namespace DeathNewspaper
                 audioLoad = Task.Run(() => WaveData.Read(audioPath).ToWave(1, songVolume));
                 try { escapeWave = WaveData.Read(Asset("escsound.wav")).ToWave(0, 1f); }
                 catch (Exception e) { Logger.LogWarning("Escape sound could not load: " + e); }
-                Logger.LogInfo("Death Newspaper ready. F8 previews the layout outside raids.");
+                Logger.LogInfo("Death Newspaper ready.");
             }
             catch (Exception e) { Logger.LogError(e); enabled = false; }
         }
@@ -453,8 +453,6 @@ namespace DeathNewspaper
                 catch (Exception e) { Logger.LogWarning(e); }
                 Dismiss(raidPresentation && overlay != null); return;
             }
-            if (!active && Input.GetKeyDown(KeyCode.F8) && FindObjectOfType<GameWorld>() == null)
-            { active = true; raidPresentation = false; keepSongOnResults = false; Show(); }
             if (overlay == null) return;
             var system = EventSystem.current;
             if (system != null && system.enabled) { blocked.Add(system); system.enabled = false; }
